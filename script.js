@@ -17,6 +17,8 @@ let isGameRunning = false;
 let animationFrameId;
 let bossEnemy = null;
 let enemyShootIntervalId;
+let touchStartX = 0;
+let isTouching = false;
 
 const player = {
   x: canvas.width / 2 - 25,
@@ -393,6 +395,39 @@ resetButton.addEventListener("click", function () {
   if (!isGameRunning) {
     isGameRunning = true;
     gameLoop();
+  }
+});
+
+canvas.addEventListener("touchstart", (e) => {
+  if (isGameRunning) {
+    touchStartX = e.touches[0].clientX;
+    isTouching = true;
+  }
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  if (isTouching) {
+    const touchX = e.touches[0].clientX;
+    const touchDeltaX = touchX - touchStartX;
+    player.x += touchDeltaX;
+    touchStartX = touchX;
+    if (player.x < 0) player.x = 0;
+    else if (player.x + player.width > canvas.width)
+      player.x = canvas.width - player.width;
+  }
+});
+
+canvas.addEventListener("touchend", () => {
+  isTouching = false;
+});
+
+canvas.addEventListener("touchcancel", () => {
+  isTouching = false;
+});
+
+canvas.addEventListener("touchstart", (e) => {
+  if (isGameRunning) {
+    shoot();
   }
 });
 

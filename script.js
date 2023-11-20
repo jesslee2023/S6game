@@ -264,6 +264,7 @@ function collisionDetection() {
     ) {
       enemyBullets.splice(b, 1);
       lives -= 1;
+      playSound("hurt.wav");
       updateLivesDisplay();
       if (lives <= 0) {
         gameOver();

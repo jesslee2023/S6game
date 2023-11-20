@@ -4,7 +4,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("scoreValue");
 const livesEl = document.getElementById("livesValue");
-const gameOverEl = document.getElementById("game-over");
+const gameOverEl = document.getElementById("game-end");
 const startButton = document.getElementById("startButton");
 const pauseButton = document.getElementById("pauseButton");
 const resetButton = document.getElementById("resetButton");
@@ -30,12 +30,12 @@ const player = {
 const bullets = [];
 const enemyBullets = [];
 const enemies = [];
-const enemyWidth = 30;
+const enemyWidth = 80;
 const enemyHeight = 20;
 const enemyPadding = 10;
 const enemyOffsetTop = 30;
-const enemyRowCount = 3;
-const enemyColumnCount = 19;
+const enemyRowCount = 1;
+const enemyColumnCount = 5;
 
 function createEnemies() {
   for (let c = 0; c < enemyColumnCount; c++) {
@@ -225,7 +225,7 @@ function shoot() {
   const bulletX = player.x + player.width / 2;
   const bulletY = player.y;
   bullets.push({ x: bulletX, y: bulletY, dy: -4 });
-  // 添加射击音效
+
   playSound("shoot.wav");
 }
 
@@ -269,6 +269,9 @@ function collisionDetection() {
       return;
     }
   }
+  if (enemies.every((column) => column.every((enemy) => enemy.status === 0))) {
+    showVictory();
+  }
 }
 
 function updateScoreDisplay() {
@@ -292,16 +295,18 @@ function updateHighScoreDisplay() {
 
 function gameOver() {
   isGameRunning = false;
-  gameOverEl.style.display = "block";
+  document.getElementById("endMessage").textContent = "Game Over";
+  document.getElementById("game-end").style.display = "block";
   cancelAnimationFrame(animationFrameId);
   clearInterval(enemyShootIntervalId);
-  fetchJoke();
 }
 
 function showVictory() {
-  gameOverEl.textContent = "Victory!";
-  gameOverEl.style.display = "block";
-  addJokeButton();
+  isGameRunning = false;
+  document.getElementById("endMessage").textContent = "Victory!";
+  document.getElementById("game-end").style.display = "block";
+  cancelAnimationFrame(animationFrameId);
+  clearInterval(enemyShootIntervalId);
 }
 
 function addJokeButton() {
@@ -340,9 +345,9 @@ function fetchJoke() {
   fetch("https://official-joke-api.appspot.com/random_joke")
     .then((response) => response.json())
     .then((joke) => {
-      alert(
-        `Congratulations! Here's a programmer's joke to tickle your funny bone.:\n${joke.setup}\n${joke.punchline}`
-      );
+      document.getElementById(
+        "jokeText"
+      ).textContent = `${joke.setup} - ${joke.punchline}`;
     })
     .catch((error) => console.error("Error fetching joke:", error));
 }
@@ -392,6 +397,7 @@ resetButton.addEventListener("click", function () {
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
+document.getElementById("jokeButton").addEventListener("click", fetchJoke);
 
 createEnemies();
 updateScoreDisplay();

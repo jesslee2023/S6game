@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: white;
+  font-family: "Press Start 2P", cursive;
+}
+
+#game-container {
+  width: 800px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+canvas {
+  display: block;
+  background-color: #111;
+  width: 100%;
+  height: auto;
+}
+
+#game-controls {
+  margin-top: 10px;
+  text-align: center;
+}
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#game-over {
+  color: red;
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  #game-container {
+    width: 100%;
+    height: auto;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+  }
+}
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: white;
+  font-family: "Press Start 2P", cursive;
+}
+
+#game-container {
+  width: 800px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+canvas {
+  display: block;
+  background-color: #111;
+  width: 100%;
+  height: auto;
+}
+
+#game-controls {
+  margin-top: 10px;
+  text-align: center;
+}
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#game-over {
+  color: red;
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+#jokeText {
+  margin-top: 20px;
+  color: yellow;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 900px) {
+  #game-container {
+    width: 100%;
+    height: auto;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+  }
+}

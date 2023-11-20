@@ -30,12 +30,12 @@ const player = {
 const bullets = [];
 const enemyBullets = [];
 const enemies = [];
-const enemyWidth = 80;
+const enemyWidth = 60;
 const enemyHeight = 20;
 const enemyPadding = 10;
 const enemyOffsetTop = 30;
-const enemyRowCount = 1;
-const enemyColumnCount = 5;
+const enemyRowCount = 3;
+const enemyColumnCount = 11;
 
 function createEnemies() {
   for (let c = 0; c < enemyColumnCount; c++) {
@@ -375,6 +375,7 @@ function clear() {
 
 startButton.addEventListener("click", function () {
   if (!isGameRunning) {
+    document.getElementById("game-title").classList.add("hidden");
     isGameRunning = true;
     resetGame();
     enemyShootIntervalId = setInterval(enemyShoot, enemyShootInterval);

@@ -19,6 +19,7 @@ let bossEnemy = null;
 let enemyShootIntervalId;
 let touchStartX = 0;
 let isTouching = false;
+let soundEnabled = localStorage.getItem("soundEnabled") === "true";
 
 const player = {
   x: canvas.width / 2 - 25,
@@ -38,6 +39,44 @@ const enemyPadding = 10;
 const enemyOffsetTop = 30;
 const enemyRowCount = 3;
 const enemyColumnCount = 11;
+
+function initializeSound() {
+  const soundToggle = document.getElementById("soundToggle");
+  const soundLabel = document.getElementById("soundLabel");
+  soundToggle.checked = soundEnabled;
+  soundLabel.textContent = soundEnabled ? "Sound On" : "Sound Off";
+  updateSoundState();
+}
+
+function enableSound() {
+  soundEnabled = true;
+  localStorage.setItem("soundEnabled", "true");
+}
+
+function disableSound() {
+  soundEnabled = false;
+  localStorage.setItem("soundEnabled", "false");
+}
+
+function toggleSound() {
+  const soundLabel = document.getElementById("soundLabel");
+  soundEnabled = !soundEnabled;
+  soundLabel.textContent = soundEnabled ? "Sound On" : "Sound Off";
+  updateSoundState();
+  canvas.focus();
+}
+
+function updateSoundState() {
+  if (soundEnabled) {
+    enableSound();
+  } else {
+    disableSound();
+  }
+}
+
+document.getElementById("soundToggle").addEventListener("change", toggleSound);
+
+initializeSound();
 
 function createEnemies() {
   for (let c = 0; c < enemyColumnCount; c++) {
@@ -340,8 +379,10 @@ function resetGame() {
 }
 
 function playSound(filename) {
-  let sound = new Audio(filename);
-  sound.play();
+  if (soundEnabled) {
+    let sound = new Audio(filename);
+    sound.play();
+  }
 }
 
 function fetchJoke() {
@@ -378,8 +419,9 @@ function clear() {
 
 startButton.addEventListener("click", function () {
   if (!isGameRunning) {
-    document.getElementById("game-title").classList.add("hidden");
+    document.getElementById("game-title").style.display = "none";
     isGameRunning = true;
+    canvas.focus();
     resetGame();
     enemyShootIntervalId = setInterval(enemyShoot, enemyShootInterval);
     gameLoop();
@@ -388,7 +430,10 @@ startButton.addEventListener("click", function () {
 
 pauseButton.addEventListener("click", function () {
   isGameRunning = !isGameRunning;
-  if (isGameRunning) gameLoop();
+  if (isGameRunning) {
+    gameLoop();
+  }
+  canvas.focus();
 });
 
 resetButton.addEventListener("click", function () {
@@ -397,6 +442,9 @@ resetButton.addEventListener("click", function () {
     isGameRunning = true;
     gameLoop();
   }
+  setTimeout(function () {
+    canvas.focus();
+  }, 0);
 });
 
 canvas.addEventListener("touchstart", (e) => {
@@ -432,8 +480,8 @@ canvas.addEventListener("touchstart", (e) => {
   }
 });
 
-document.addEventListener("keydown", keyDown);
-document.addEventListener("keyup", keyUp);
+canvas.addEventListener("keydown", keyDown);
+canvas.addEventListener("keyup", keyUp);
 document.getElementById("jokeButton").addEventListener("click", fetchJoke);
 
 createEnemies();

@@ -15,11 +15,16 @@
         <div id="highScore">High Score: <span id="highScoreValue">0</span></div>
         <div id="lives">Lives: <span id="livesValue">10</span></div>
       </header>
-      <canvas id="gameCanvas" width="800" height="600"></canvas>
+      <canvas id="gameCanvas" width="800" height="600" tabindex="0"></canvas>
       <div id="game-controls">
         <button id="startButton">Start Game</button>
         <button id="pauseButton">Pause Game</button>
         <button id="resetButton">Reset Game</button>
+        <label class="switch">
+          <input type="checkbox" id="soundToggle" />
+          <span class="slider"></span>
+          <span id="soundLabel" class="slider-label">Sound Off</span>
+        </label>
       </div>
       <div id="game-end" style="display: none">
         <p id="endMessage">Game Over</p>

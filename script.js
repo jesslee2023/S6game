@@ -2,6 +2,7 @@
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+// DOM elements for displaying game information
 const scoreEl = document.getElementById("scoreValue");
 const livesEl = document.getElementById("livesValue");
 const gameOverEl = document.getElementById("game-end");
@@ -19,7 +20,7 @@ let bossEnemy = null;
 let enemyShootIntervalId;
 let touchStartX = 0;
 let isTouching = false;
-let soundEnabled = localStorage.getItem("soundEnabled") === "true";
+let soundEnabled = localStorage.getItem("soundEnabled") === "true"; // Using localStorage to retrieve sound settings
 
 const player = {
   x: canvas.width / 2 - 25,
@@ -50,7 +51,7 @@ function initializeSound() {
 
 function enableSound() {
   soundEnabled = true;
-  localStorage.setItem("soundEnabled", "true");
+  localStorage.setItem("soundEnabled", "true"); // Using localStorage to store sound settings
 }
 
 function disableSound() {
@@ -74,7 +75,7 @@ function updateSoundState() {
   }
 }
 
-document.getElementById("soundToggle").addEventListener("change", toggleSound);
+document.getElementById("soundToggle").addEventListener("change", toggleSound); // Adding an event listener to the sound toggle button
 
 initializeSound();
 
@@ -318,7 +319,7 @@ function collisionDetection() {
 
 function updateScoreDisplay() {
   scoreEl.textContent = score;
-  let highScore = localStorage.getItem("highScore") || 0;
+  let highScore = localStorage.getItem("highScore") || 0; // Retrieving high score from localStorage
   if (score > highScore) {
     localStorage.setItem("highScore", score);
     highScore = score;
@@ -338,7 +339,7 @@ function updateHighScoreDisplay() {
 function gameOver() {
   isGameRunning = false;
   document.getElementById("endMessage").textContent = "Game Over";
-  document.getElementById("game-end").style.display = "block";
+  document.getElementById("game-end").style.display = "block"; // Modifying DOM elements to change display properties
   cancelAnimationFrame(animationFrameId);
   clearInterval(enemyShootIntervalId);
 }
@@ -384,7 +385,7 @@ function playSound(filename) {
     sound.play();
   }
 }
-
+// The fetchJoke function uses the Fetch API to retrieve data from a third-party API
 function fetchJoke() {
   fetch("https://official-joke-api.appspot.com/random_joke")
     .then((response) => response.json())
